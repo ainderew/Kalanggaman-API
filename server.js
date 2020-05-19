@@ -21,7 +21,7 @@ app.listen(port, ()=>{
 
 
 //Connect to DB
-mongoose.connect("mongodb+srv://andrewapinon:mongos123@cluster0-ucrf4.mongodb.net/Reservations", { useNewUrlParser: true, useUnifiedTopology: true }, () => console.log("Connected to DB"));
+mongoose.connect(process.env.DB_CONNECT, { useNewUrlParser: true, useUnifiedTopology: true }, () => console.log("Connected to DB"));
 
 //routes
 app.use("/formsubmit", formsubmitRoute);
