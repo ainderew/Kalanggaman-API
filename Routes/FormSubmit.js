@@ -9,9 +9,9 @@ router.post("/", async (req,res)=> {
         phoneNumber: req.body.phoneNumber,
         date: req.body.date
     })
-
+    res.status(301).redirect("https://serene-hypatia-9cba55.netlify.app/database");
     post.save();
-    res.redirect("https://serene-hypatia-9cba55.netlify.app/database");
+    console.log("success");
 })
 
 module.exports = router;
