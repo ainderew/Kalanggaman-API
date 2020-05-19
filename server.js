@@ -1,8 +1,10 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
+const cors = require("cors");
 const databaseRoute = require("./Routes/Database");
-const cors = require("cors")
+const formsubmitRoute = require("./Routes/FormSubmit");
+
 
 const port = process.env.PORT || 3000;
 
@@ -22,5 +24,5 @@ app.listen(port, ()=>{
 mongoose.connect("mongodb+srv://andrewapinon:mongos123@cluster0-ucrf4.mongodb.net/Reservations", { useNewUrlParser: true, useUnifiedTopology: true }, () => console.log("Connected to DB"));
 
 //routes
-
+app.use("/formsubmit", formsubmitRoute);
 app.use("/database", databaseRoute);
