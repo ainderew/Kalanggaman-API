@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
+require('dotenv').config()
 const cors = require("cors");
 const databaseRoute = require("./Routes/Database");
 const formsubmitRoute = require("./Routes/FormSubmit");
