@@ -16,6 +16,10 @@ function paginatedResults(model) {
         const endIndex = page * limit;
     
         const results = {};
+
+        results.current = {
+            page: page
+        }
     
         results.next = {
             page: page + 1,
@@ -29,6 +33,8 @@ function paginatedResults(model) {
         }
         try{
             results.results = await model.find().limit(limit).skip(startIndex).exec()
+            results.allResults = await model.find()
+            results.totalPage = (results.allResults.length)/limit
             res.paginatedResults = results
             next()
         }catch (e){
