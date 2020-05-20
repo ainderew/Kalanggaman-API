@@ -14,6 +14,7 @@ function paginatedResults(model) {
     
         const startIndex = (page-1) * limit;
         const endIndex = page * limit;
+        const max = await model.estimatedDocumentCount()
     
         const results = {};
 
@@ -21,10 +22,13 @@ function paginatedResults(model) {
             page: page
         }
     
-        results.next = {
-            page: page + 1,
-            limit: limit
+        if(endIndex < max ){
+            results.next = {
+                page: page + 1,
+                limit: limit
+            }
         }
+       
         if (startIndex > 0){
             results.prev = {
                 page: page - 1,
@@ -33,9 +37,10 @@ function paginatedResults(model) {
         }
         try{
             results.results = await model.find().limit(limit).skip(startIndex).exec()
-            results.allResults = await model.find()
-            results.totalPage = (results.allResults.length)/limit
+            results.counter = max
+            results.totalPage = results.counter/limit
             res.paginatedResults = results
+            
             next()
         }catch (e){
             res.status(500).json({message: e.message})
