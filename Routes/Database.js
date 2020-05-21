@@ -7,6 +7,20 @@ router.get("/", paginatedResults(GuestReservation), async (req,res)=>{
     
 })
 
+router.get("/findSpecific", async (req,res) =>{
+    const searchedInfo = req.query.search;
+    let myRe = new RegExp(searchedInfo,"i")
+    let data = {}
+    try{
+       data.result = await GuestReservation.find({"name":myRe})
+       res.json(data.result)
+    }catch(err){
+        console.log(err);
+    }
+    
+})
+
+//to hoist
 function paginatedResults(model) {
     return async (req,res,next) =>{
         const page = parseInt(req.query.page);
@@ -48,6 +62,20 @@ function paginatedResults(model) {
        
         
       
+    }
+}
+
+function searchResults(model){
+    return async (req,res,next) =>{
+        const searchedInfo = req.body.search;
+        const data = {};
+        try{
+           data.result = await model.find({"name":/${searchedInfo}/i})
+           res.searchedData = data;
+           next();
+        }catch(err){
+            res.json(err)
+        }
     }
 }
 module.exports = router;

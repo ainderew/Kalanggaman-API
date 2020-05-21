@@ -10,8 +10,7 @@ router.post("/", async (req,res)=> {
         date: req.body.date
     })
     res.status(301).redirect("https://serene-hypatia-9cba55.netlify.app/database");
-    post.save();
-    console.log("success");
+    post.save();    
 })
 
 module.exports = router;
