@@ -12,7 +12,7 @@ router.get("/findSpecific", async (req,res) =>{
     let myRe = new RegExp(searchedInfo,"i")
     let data = {}
     try{
-       data.result = await GuestReservation.find({"name":myRe})
+       data.result = await GuestReservation.find({"name": myRe})
        res.json(data.result)
     }catch(err){
         console.log(err);
