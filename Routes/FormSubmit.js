@@ -20,7 +20,7 @@ router.post("/", async (req,res)=> {
         name: req.body.name,
         email: req.body.email,
         phoneNumber: req.body.phoneNumber,
-        date: req.body.name
+        date: formatedDate
     })
     res.status(301).redirect("https://serene-hypatia-9cba55.netlify.app/database");
     post.save();    
