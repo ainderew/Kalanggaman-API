@@ -7,16 +7,8 @@ router.get("/", paginatedResults(GuestReservation), async (req,res)=>{
     
 })
 
-router.get("/findSpecific", async (req,res) =>{
-    const searchedInfo = req.query.search;
-    let myRe = new RegExp(searchedInfo,"i")
-    let data = {}
-    try{
-       data.result = await GuestReservation.find({"name": myRe})
-       res.json(data.result)
-    }catch(err){
-        console.log(err);
-    }
+router.get("/findSpecific", searchResults(GuestReservation,"name"), async (req,res) =>{
+    res.json(res.searchResults)
     
 })
 
@@ -65,17 +57,18 @@ function paginatedResults(model) {
     }
 }
 
-function searchResults(model){
+function searchResults(model,field){
     return async (req,res,next) =>{
-        const searchedInfo = req.body.search;
-        const data = {};
+        const searchedInfo = req.query.search;
+        let myRe = new RegExp(searchedInfo,"i")
+        let data = {}
         try{
-           data.result = await model.find({"name":/${searchedInfo}/i})
-           res.searchedData = data;
-           next();
+        data.result = await model.find({field: myRe})
+        res.searchResults = data.result
         }catch(err){
-            res.json(err)
+            console.log(err);
         }
     }
 }
+
 module.exports = router;
