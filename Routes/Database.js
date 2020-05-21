@@ -52,7 +52,7 @@ function paginatedResults(model) {
         try{
             results.results = await model.find().limit(limit).skip(startIndex).exec()
             results.counter = max
-            results.totalPage = MATH.ceil(results.counter/limit)
+            results.totalPage = Math.ceil(results.counter/limit)
             res.paginatedResults = results
             
             next()
