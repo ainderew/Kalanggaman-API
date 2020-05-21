@@ -66,7 +66,7 @@ function searchResults(model,field){
         query[field] = myRe
         
         try{ 
-        data.result = await model.find({query})
+        data.result = await model.find(query)
         res.searchResults = data.result
         next()
         }catch(err){
