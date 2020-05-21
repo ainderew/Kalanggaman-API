@@ -4,18 +4,6 @@ const model = require("../Models/GuestReservation");
 
 router.post("/", async (req,res)=> {
     
-
-    let formatedDate =""
-    let tempDayHolder ="";
-    let tempYearHolder ="";
-    let tempMonthHolder ="";
-    
-    formatedDate = req.body.reservationDate.split("-")
-    tempDayHolder = formatedDate[2].split("T")[0];
-    tempYearHolder = formatedDate[0];
-    tempMonthHolder = formatedDate[1]
-    formatedDate = `${tempMonthHolder}/${tempDayHolder}/${tempYearHolder}`
-
     const post = new model({
         name: req.body.name,
         email: req.body.email,
