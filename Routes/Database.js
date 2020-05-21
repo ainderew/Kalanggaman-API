@@ -62,10 +62,11 @@ function searchResults(model,field){
         const searchedInfo = req.query.search;
         let myRe = new RegExp(searchedInfo,"i")
         let data = {}
-        let property = field;
-        try{
-            
-        data.result = await model.find({property: myRe})
+        let query = {}
+        query[field] = myRe
+        
+        try{ 
+        data.result = await model.find({query})
         res.searchResults = data.result
         next()
         }catch(err){
