@@ -100,11 +100,9 @@ function searchResultsFilteredByMonth(model){
         const searchedInfo = req.query.search;
         let myRe = new RegExp(searchedInfo,"i")
         let data = {}
-        let query = {}
-        query[field] = myRe
         
         try{ 
-        data.result = await model.find(query,{"date":regToday})
+        data.result = await model.find({"name":myRe},{"date":regToday})
         res.searchResults = data.result
         next()
         }catch(err){
