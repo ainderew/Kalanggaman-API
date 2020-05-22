@@ -42,7 +42,7 @@ function paginatedResults(model) {
             }
         }
         try{
-            results.results = await model.find().limit(limit).skip(startIndex).exec()
+            results.results = await model.find().sort({"name":1}).limit(limit).skip(startIndex)
             results.counter = max
             results.totalPage = Math.ceil(results.counter/limit)
             res.paginatedResults = results
