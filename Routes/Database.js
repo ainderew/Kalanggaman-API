@@ -22,7 +22,7 @@ router.get("/reservationsToday", async (req,res) =>{
     const data = {}
 
     try{
-        data.list = await GuestReservation.find({"date":})
+        data.list = await GuestReservation.find({"date":"May"})
         res.json(data.list);
     }catch(err){
         console.log(err)
