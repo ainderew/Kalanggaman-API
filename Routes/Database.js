@@ -29,7 +29,7 @@ router.get("/currentMonthFilter",currentMonthFilter(), async (req,res) =>{
 
 })
 router.get("/findSpecificFilteredByMonth",searchResultsFilteredByMonth(GuestReservation), async (req,res) =>{
-    res.json(res.response)
+    res.json(res.searchResults)
     
 
 })
