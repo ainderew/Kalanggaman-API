@@ -13,16 +13,18 @@ router.get("/findSpecific", searchResults(GuestReservation,"name"), async (req,r
 })
 
 router.get("/reservationsToday", async (req,res) =>{
-    // const dateToday = new Date;
+    const months = [ "Jan", "Feb", "March", "Apr", "May", "Jun",
+"Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
+
+    const dateToday = new Date;
     // const year = dateToday.getFullYear()
-    // const month = dateToday.getMonth()
+    const month = months[dateToday.getMonth()]
     // let Today = `${year}-${month}`
-    // Today = Today.toString()
-    // const regToday = new RegExp(Today,"i")
+    const regToday = new RegExp(month,"i")
     const data = {}
 
     try{
-        data.list = await GuestReservation.find({"date":"May"})
+        data.list = await GuestReservation.find({"date":regToday})
         res.json(data.list);
     }catch(err){
         console.log(err)
