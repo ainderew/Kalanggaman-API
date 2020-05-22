@@ -42,7 +42,8 @@ function paginatedResults(model) {
         }
         try{
             results.results = await model.find().sort({"name":1}).limit(limit).skip(startIndex)
-            results.totalPage =  await model.estimatedDocumentCount()/limit
+            results.counter = await model.estimatedDocumentCount()
+            results.totalPage = results.counter/limit
             res.paginatedResults = results
             
             next()
