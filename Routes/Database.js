@@ -12,6 +12,24 @@ router.get("/findSpecific", searchResults(GuestReservation,"name"), async (req,r
     
 })
 
+router.get("/reservationsToday", async (req,res) =>{
+    // const dateToday = new Date;
+    // const year = dateToday.getFullYear()
+    // const month = dateToday.getMonth()
+    // let Today = `${year}-${month}`
+    // Today = Today.toString()
+    // const regToday = new RegExp(Today,"i")
+    const data = {}
+
+    try{
+        data.list = await GuestReservation.find({"date":})
+        res.json(data.list);
+    }catch(err){
+        console.log(err)
+    }
+
+})
+
 //to hoist
 function paginatedResults(model) {
     return async (req,res,next) =>{
@@ -43,7 +61,7 @@ function paginatedResults(model) {
         try{
             results.results = await model.find().sort({"name":1}).limit(limit).skip(startIndex)
             results.counter = maxDocs
-            results.totalPage = results.counter/limit
+            results.totalPage = Math.ceil(results.counter/limit)
             res.paginatedResults = results
             
             next()
