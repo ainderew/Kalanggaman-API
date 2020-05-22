@@ -2,6 +2,15 @@ const express = require("express");
 const router = express.Router();
 const GuestReservation = require("../Models/GuestReservation");
 
+const months = [ "Jan", "Feb", "March", "Apr", "May", "Jun",
+        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
+
+const dateToday = new Date;
+const month = months[dateToday.getMonth()]
+const regToday = new RegExp(month,"i")
+
+//ROUTES
+
 router.get("/", paginatedResults(GuestReservation), async (req,res)=>{
     res.json(res.paginatedResults)
     
@@ -12,23 +21,16 @@ router.get("/findSpecific", searchResults(GuestReservation,"name"), async (req,r
     
 })
 
-router.get("/reservationsToday", async (req,res) =>{
-    const months = [ "Jan", "Feb", "March", "Apr", "May", "Jun",
-"Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
 
-    const dateToday = new Date;
-    // const year = dateToday.getFullYear()
-    const month = months[dateToday.getMonth()]
-    // let Today = `${year}-${month}`
-    const regToday = new RegExp(month,"i")
-    const data = {}
 
-    try{
-        data.list = await GuestReservation.find({"date":regToday})
-        res.json(data.list);
-    }catch(err){
-        console.log(err)
-    }
+router.get("/currentMonthFilter",currentMonthFilter(), async (req,res) =>{
+    res.json(res.response)
+    
+
+})
+router.get("/findSpecificFilteredByMonth",searchResultsFilteredByMonth(GuestReservation), async (req,res) =>{
+    res.json(res.response)
+    
 
 })
 
@@ -90,6 +92,35 @@ function searchResults(model,field){
         next()
         }catch(err){
             console.log(err);
+        }
+    }
+}
+function searchResultsFilteredByMonth(model){
+    return async (req,res,next) =>{
+        const searchedInfo = req.query.search;
+        let myRe = new RegExp(searchedInfo,"i")
+        let data = {}
+        let query = {}
+        query[field] = myRe
+        
+        try{ 
+        data.result = await model.find(query,{"date":regToday})
+        res.searchResults = data.result
+        next()
+        }catch(err){
+            console.log(err);
+        }
+    }
+}
+
+function currentMonthFilter(){
+    return async (req,res,next) =>{
+        const data = {}
+        try{
+            data.list = await GuestReservation.find({"date":regToday})
+            res.response = data.list
+        }catch(err){
+            console.log(err)
         }
     }
 }
