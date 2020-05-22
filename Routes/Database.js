@@ -102,7 +102,7 @@ function searchResultsFilteredByMonth(model){
         let data = {}
         
         try{ 
-        data.result = await model.find({"name":myRe},{"date":regToday})
+        data.result = await model.find({"name":myRe,"date":regToday})
         res.searchResults = data.result
         next()
         }catch(err){
