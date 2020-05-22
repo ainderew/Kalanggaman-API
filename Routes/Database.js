@@ -119,6 +119,7 @@ function currentMonthFilter(){
         try{
             data.list = await GuestReservation.find({"date":regToday})
             res.response = data.list
+            next()
         }catch(err){
             console.log(err)
         }
