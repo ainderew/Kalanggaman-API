@@ -5,6 +5,7 @@ require('dotenv').config()
 const cors = require("cors");
 const databaseRoute = require("./Routes/Database");
 const formsubmitRoute = require("./Routes/FormSubmit");
+const deleteRoute = require("./Routes/Delete");
 
 
 const port = process.env.PORT || 3000;
@@ -27,3 +28,4 @@ mongoose.connect(process.env.DB_CONNECT, { useNewUrlParser: true, useUnifiedTopo
 //routes
 app.use("/formsubmit", formsubmitRoute);
 app.use("/database", databaseRoute);
+app.use("/delete", deleteRoute);
