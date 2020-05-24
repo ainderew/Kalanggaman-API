@@ -2,12 +2,7 @@ const express = require("express");
 const router = express.Router();
 const GuestReservation = require("../Models/GuestReservation");
 
-const months = [ "Jan", "Feb", "March", "Apr", "May", "Jun",
-        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
 
-const dateToday = new Date;
-const month = months[dateToday.getMonth()]
-const regToday = new RegExp(month,"i")
 
 //ROUTES
 
@@ -20,8 +15,6 @@ router.get("/findSpecific", searchResults(GuestReservation,"name"), async (req,r
     res.json(res.searchResults)
     
 })
-
-
 
 router.get("/currentMonthFilter",currentMonthFilter(), async (req,res) =>{
     res.json(res.response)
@@ -113,6 +106,11 @@ function searchResultsFilteredByMonth(model){
 
 function currentMonthFilter(){
     return async (req,res,next) =>{
+        const months = [ "Jan", "Feb", "March", "Apr", "May", "Jun",
+        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
+        const dateToday = new Date;
+        const month = months[dateToday.getMonth()]
+        const regToday = new RegExp(month,"i")
         const data = {}
         try{
             data.list = await GuestReservation.find({"date":regToday})
